@@ -2,6 +2,7 @@ const EventEmitter = require('events')
 const BusHelper = require('./BusHelper')
 const GattServer = require('./GattServer')
 
+// See: https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc/device-api.txt
 class Device extends EventEmitter {
   constructor (dbus, adapter, device) {
     super()
@@ -11,14 +12,38 @@ class Device extends EventEmitter {
     this.helper = new BusHelper(dbus, 'org.bluez', `/org/bluez/${adapter}/${device}`, 'org.bluez.Device1', { usePropsEvents: true })
   }
 
+  async getUUIDs () {
+    return this.helper.prop('UUIDs')
+  }
+
+  async getBlocked () {
+    return this.helper.prop('Blocked')
+  }
+
+  async getManufacturerData () {
+    return this.helper.prop('ManufacturerData')
+  }
+
+  async getServiceData () {
+    return this.helper.prop('ServiceData')
+  }
+
+  async getServicesResolved () {
+    return this.helper.prop('ServicesResolved')
+  }
+
   async getName () {
     return this.helper.prop('Name')
   }
 
+  // The Bluetooth device address of the remote device.
   async getAddress () {
     return this.helper.prop('Address')
   }
 
+  // Possible values:
+  // 				"public" - Public address
+  // 				"random" - Random address
   async getAddressType () {
     return this.helper.prop('AddressType')
   }

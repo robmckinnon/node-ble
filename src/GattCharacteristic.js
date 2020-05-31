@@ -2,6 +2,7 @@ const EventEmitter = require('events')
 const BusHelper = require('./BusHelper')
 const buildTypedValue = require('./buildTypedValue')
 
+// See: https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc/gatt-api.txt
 class GattCharacteristic extends EventEmitter {
   constructor (dbus, adapter, device, service, characteristic) {
     super()

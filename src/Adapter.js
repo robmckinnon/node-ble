@@ -5,6 +5,7 @@ const buildTypedValue = require('./buildTypedValue')
 const DEFAULT_TIMEOUT = 2 * 60 * 1000
 const DEFAULT_DISCOVERY_INTERVAL = 1000
 
+// See https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc/adapter-api.txt
 class Adapter {
   constructor (dbus, adapter) {
     this.dbus = dbus
