@@ -76,6 +76,23 @@ class Device extends EventEmitter {
     return this.helper.callMethod('CancelPair')
   }
 
+  async connectProfile (uuid) {
+    const cb = (propertiesChanged) => {
+      console.log(propertiesChanged)
+      if ('Connected' in propertiesChanged) {
+        const { value } = propertiesChanged.Connected
+        if (value) {
+          this.emit('connect', { connected: true })
+        } else {
+          this.emit('disconnect', { connected: false })
+        }
+      }
+    }
+
+    this.helper.on('PropertiesChanged', cb)
+    await this.helper.callMethod('ConnectProfile', uuid)
+  }
+
   async connect () {
     const cb = (propertiesChanged) => {
       if ('Connected' in propertiesChanged) {
